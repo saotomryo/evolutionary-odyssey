@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { EraType } from '../game/types';
 import { ERAS } from '../game/constants';
+import { publicAssetPath } from '../game/assets';
 
 interface GameOverModalProps {
   score: number;
@@ -29,7 +30,8 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
     setImageError(false);
   }, [reason]);
 
-  const clearImagePath = 'images/events/neo_sapiens.png';
+  const clearImagePath = publicAssetPath('images/events/neo_sapiens.png');
+  const fallbackImagePath = publicAssetPath('icons/clear_modern.png');
 
   return (
     <div className="modal-overlay">
@@ -42,7 +44,7 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
           <div className="clear-image-wrapper">
             <div className="clear-image-container gold-glow">
               <img 
-                src={imageError ? 'icons/clear_modern.png' : clearImagePath} 
+                src={imageError ? fallbackImagePath : clearImagePath} 
                 alt="究極生命体 ネオ・サピエンス" 
                 className="clear-image"
                 onError={() => {

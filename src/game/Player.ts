@@ -1,5 +1,6 @@
 import type { PlayerStats } from './types';
 import { EVOLUTIONS } from './constants';
+import { publicAssetPath } from './assets';
 
 export class Player {
   public x: number;
@@ -41,7 +42,7 @@ export class Player {
   // 生命アイコンの読み込み
   public loadIconImage(eraType: string) {
     const img = new Image();
-    img.src = `icons/${eraType.toLowerCase()}.png`;
+    img.src = publicAssetPath(`icons/${eraType.toLowerCase()}.png`);
     img.onload = () => {
       this.iconImage = img;
     };

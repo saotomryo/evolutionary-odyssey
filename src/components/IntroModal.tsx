@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { publicAssetPath } from '../game/assets';
 
 interface IntroModalProps {
   onConfirm: () => void;
@@ -83,7 +84,7 @@ const renderOriginOfLifeSvg = () => {
 
 export const IntroModal: React.FC<IntroModalProps> = ({ onConfirm }) => {
   const [imageError, setImageError] = useState<boolean>(false);
-  const imagePath = 'images/events/origin_of_life.png';
+  const imagePath = publicAssetPath('images/events/origin_of_life.png');
 
   return (
     <div className="modal-overlay">

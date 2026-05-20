@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { ExtinctionEvent } from '../game/types';
+import { publicAssetPath } from '../game/assets';
 
 interface EventModalProps {
   event: ExtinctionEvent;
@@ -386,7 +387,7 @@ export const EventModal: React.FC<EventModalProps> = ({
   };
 
   const filename = getEventImageFilename(event.name);
-  const imagePath = filename ? `images/events/${filename}` : '';
+  const imagePath = filename ? publicAssetPath(`images/events/${filename}`) : '';
 
   return (
     <div className="modal-overlay">

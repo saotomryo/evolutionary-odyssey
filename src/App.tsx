@@ -11,6 +11,7 @@ import { EventModal } from './components/EventModal';
 import { IntroModal } from './components/IntroModal';
 import { sound } from './game/SoundGenerator';
 import { ERAS, EVOLUTIONS } from './game/constants';
+import { publicAssetPath } from './game/assets';
 
 import './styles/game.css';
 
@@ -32,7 +33,7 @@ const EventWarningArt: React.FC<{ eventName: string; japaneseName: string }> = (
   };
 
   const filename = getEventImageFilename(eventName);
-  const imagePath = filename ? `images/events/${filename}` : '';
+  const imagePath = filename ? publicAssetPath(`images/events/${filename}`) : '';
 
   if (imagePath && !imageError) {
     return (
@@ -622,7 +623,7 @@ export const App: React.FC = () => {
               
               <div className="appearance-image-container">
                 <img 
-                  src={`icons/${currentEra.toLowerCase()}.png`} 
+                  src={publicAssetPath(`icons/${currentEra.toLowerCase()}.png`)} 
                   alt={ERAS[currentEra]?.japaneseName} 
                   className="appearance-image"
                 />

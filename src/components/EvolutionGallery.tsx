@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { EVOLUTIONS, ERAS } from '../game/constants';
 import type { EraType } from '../game/types';
+import { publicAssetPath } from '../game/assets';
 
 interface EvolutionGalleryProps {
   unlockedIds: string[];
@@ -94,7 +95,7 @@ export const EvolutionGallery: React.FC<EvolutionGalleryProps> = ({
                     <>
                       <div className="gallery-creature-img-container">
                         <img 
-                          src={`icons/${eraKey.toLowerCase()}.png`} 
+                          src={publicAssetPath(`icons/${eraKey.toLowerCase()}.png`)} 
                           alt={era.japaneseName} 
                           className="gallery-creature-img" 
                         />
