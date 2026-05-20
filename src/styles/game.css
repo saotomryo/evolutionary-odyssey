@@ -1,0 +1,1904 @@
+/* Game UI CSS */
+
+/* --- Container --- */
+.game-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #07090e;
+}
+
+.canvas-element {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Main Menu --- */
+.menu-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, rgba(13, 17, 28, 0.88) 0%, rgba(7, 9, 14, 0.98) 100%);
+  z-index: 100;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.menu-content {
+  max-width: 650px;
+  width: 100%;
+  text-align: center;
+  padding: 40px;
+}
+
+.menu-title {
+  font-size: 3.2rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.menu-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  letter-spacing: 0.05em;
+}
+
+.menu-intro-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 32px;
+  text-align: left;
+  line-height: 1.6;
+}
+
+.menu-intro-card h3 {
+  color: var(--color-primary);
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+}
+
+.menu-intro-card p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.menu-intro-card p:last-child {
+  margin-bottom: 0;
+}
+
+.menu-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.highscore-badge {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 6px 16px;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  border-radius: 20px;
+  color: #fbbf24;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* --- Mobile Virtual Joystick Indicator --- */
+.touch-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  pointer-events: none;
+  animation: pulse-soft 2s infinite;
+}
+
+/* --- Game HUD --- */
+.hud-container {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+  z-index: 10;
+  gap: 16px;
+}
+
+.hud-panel {
+  pointer-events: auto;
+  padding: 14px 20px;
+}
+
+.hud-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.hud-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  text-align: right;
+}
+
+.hud-stat-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hud-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hud-label-hp { color: var(--color-danger); }
+.hud-label-energy { color: var(--color-primary); }
+
+.hud-bar-container {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.hud-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.15s ease-out;
+}
+
+.hud-bar.hp {
+  background: linear-gradient(90deg, #ef4444, #f43f5e);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+}
+
+.hud-bar.energy {
+  background: linear-gradient(90deg, #10b981, #06b6d4);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.hud-era-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.hud-era-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.hud-score-value {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fbbf24;
+}
+
+.hud-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.hud-icon-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hud-icon-btn:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.25);
+}
+
+/* --- Evolution Modal --- */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 7, 10, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+  padding: 24px;
+}
+
+.evo-container {
+  max-width: 950px;
+  width: 100%;
+  text-align: center;
+}
+
+.evo-header {
+  margin-bottom: 32px;
+}
+
+.evo-header h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.evo-header p {
+  color: var(--text-secondary);
+}
+
+.evo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.evo-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 24px;
+  cursor: pointer;
+  text-align: left;
+  overflow: hidden;
+}
+
+.evo-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--text-muted);
+  transition: background 0.3s ease;
+}
+
+.evo-card.movement::before { background: var(--color-secondary); }
+.evo-card.defense::before { background: var(--color-primary); }
+.evo-card.sensory::before { background: var(--color-accent); }
+.evo-card.metabolism::before { background: var(--color-warning); }
+
+.evo-card:hover {
+  transform: translateY(-6px);
+  background: var(--bg-card-hover);
+}
+
+.evo-card.selected {
+  border-color: rgba(251, 191, 36, 0.6);
+  box-shadow: 0 0 24px rgba(251, 191, 36, 0.2), var(--glass-shadow);
+}
+
+.evo-card-category {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+
+.evo-card.movement .evo-card-category { color: var(--color-secondary); }
+.evo-card.defense .evo-card-category { color: var(--color-primary); }
+.evo-card.sensory .evo-card-category { color: var(--color-accent); }
+.evo-card.metabolism .evo-card-category { color: var(--color-warning); }
+
+.evo-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.evo-card-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+
+.evo-card-flavor {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.4;
+  border-left: 2px solid rgba(255,255,255,0.06);
+  padding-left: 8px;
+  margin-bottom: 18px;
+}
+
+.evo-card-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: rgba(0,0,0,0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.evo-stat-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+}
+
+.evo-stat-label {
+  color: var(--text-muted);
+}
+
+.evo-stat-value {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* --- Extinction Warning Overlay --- */
+.warning-overlay {
+  position: absolute;
+  top: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 580px;
+  z-index: 10;
+  padding: 16px 24px;
+  text-align: center;
+  border: 1px solid rgba(239, 68, 68, 0.45);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.2), var(--glass-shadow);
+  animation: border-pulse 1s infinite alternate;
+}
+
+@keyframes border-pulse {
+  from { border-color: rgba(239, 68, 68, 0.35); }
+  to { border-color: rgba(239, 68, 68, 0.75); }
+}
+
+.warning-title {
+  color: var(--color-danger);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.warning-desc {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.warning-effect {
+  font-size: 0.78rem;
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+/* --- Evolution Gallery Modal --- */
+.gallery-modal {
+  max-width: 800px;
+  width: 100%;
+  max-height: 80%;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding-bottom: 16px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  overflow-y: auto;
+  padding-right: 8px;
+  flex-grow: 1;
+}
+
+.gallery-item {
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  text-align: left;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.gallery-item.unlocked {
+  background: rgba(16, 185, 129, 0.03);
+  border-color: rgba(16, 185, 129, 0.12);
+}
+
+.gallery-item.locked {
+  opacity: 0.35;
+  filter: grayscale(1.0);
+}
+
+.gallery-item-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
+
+.gallery-item.unlocked .gallery-item-title {
+  color: var(--color-primary);
+}
+
+.gallery-item-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.gallery-lock-icon {
+  font-size: 1.5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--text-muted);
+}
+
+/* --- GameOver Modal --- */
+.gameover-container {
+  max-width: 500px;
+  width: 100%;
+  padding: 40px;
+  text-align: center;
+}
+
+.gameover-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-danger);
+  margin-bottom: 8px;
+}
+
+.gameover-reason {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: 28px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
+  padding: 14px 20px;
+}
+
+.gameover-stat-box {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 32px;
+  background: rgba(0,0,0,0.2);
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.gameover-stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.gameover-stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.gameover-stat-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #fbbf24;
+}
+
+/* Responsive UI Tweaks */
+@media (max-width: 768px) {
+  .hud-container {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    gap: 8px;
+  }
+  
+  .hud-panel {
+    padding: 10px 14px;
+  }
+
+  .hud-left {
+    max-width: 160px;
+  }
+
+  .hud-era-title {
+    font-size: 0.95rem;
+  }
+  
+  .hud-era-subtitle {
+    font-size: 0.65rem;
+  }
+
+  .hud-score-value {
+    font-size: 0.95rem;
+  }
+
+  .menu-title {
+    font-size: 2.2rem;
+  }
+
+  .evo-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .evo-grid {
+    grid-template-columns: 1fr;
+    max-height: 320px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+
+  .evo-card {
+    padding: 16px;
+  }
+
+  .warning-overlay {
+    top: 100px;
+    padding: 12px 16px;
+    max-width: 90%;
+  }
+
+  .warning-title {
+    font-size: 1rem;
+  }
+}
+
+/* --- Appearance Panel & Toggle Button --- */
+.toggle-appearance-btn {
+  position: absolute;
+  top: 86px;
+  right: 24px;
+  z-index: 12;
+  pointer-events: auto;
+  padding: 8px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 8px;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.03em;
+}
+
+.toggle-appearance-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+}
+
+.toggle-appearance-btn.active {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #34d399;
+}
+
+.appearance-panel {
+  position: absolute;
+  top: 132px;
+  right: 24px;
+  width: 310px;
+  max-height: calc(100vh - 170px);
+  z-index: 11;
+  pointer-events: auto;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: all 0.3s ease;
+  border: 1px solid var(--glass-border);
+}
+
+.appearance-panel::-webkit-scrollbar {
+  width: 4px;
+}
+
+.appearance-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.appearance-panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.appearance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 10px;
+}
+
+.appearance-header h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: var(--text-primary);
+}
+
+.era-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  color: #22d3ee;
+}
+
+.appearance-image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #040507;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.9);
+}
+
+.appearance-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: float-slow 4s ease-in-out infinite alternate;
+}
+
+@keyframes float-slow {
+  from { transform: scale(1.0); filter: brightness(1.0) drop-shadow(0 0 6px rgba(16, 185, 129, 0.2)); }
+  to { transform: scale(1.04); filter: brightness(1.15) drop-shadow(0 0 15px rgba(16, 185, 129, 0.45)); }
+}
+
+.appearance-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.stat-row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.stat-row span:first-child {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.stat-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.stat-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hp-fill {
+  background: linear-gradient(90deg, #ef4444, #ec4899);
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.45);
+}
+
+.stat-value {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.text-cyan { color: #22d3ee; }
+.text-gold { color: #f59e0b; }
+.text-amber { color: #f59e0b; }
+.text-emerald { color: #34d399; }
+.text-rose { color: #f43f5e; }
+
+.appearance-evolutions {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 14px;
+}
+
+.appearance-evolutions h4 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+.no-evo {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 4px 0;
+}
+
+.evo-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.evo-badge-item {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.evo-badge-item.movement {
+  color: #22d3ee;
+  background: rgba(6, 182, 212, 0.08);
+  border-color: rgba(6, 182, 212, 0.2);
+}
+
+.evo-badge-item.defense {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.evo-badge-item.sensory {
+  color: #c084fc;
+  background: rgba(168, 85, 247, 0.08);
+  border-color: rgba(168, 85, 247, 0.2);
+}
+
+.evo-badge-item.metabolism {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+/* Responsive Overrides for Mobile screen sizes */
+@media (max-width: 1024px) {
+  .toggle-appearance-btn {
+    top: auto;
+    bottom: 24px;
+    right: 24px;
+    z-index: 100;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  }
+
+  .appearance-panel {
+    top: auto;
+    bottom: 74px;
+    right: 24px;
+    width: 280px;
+    max-height: 60vh;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.6), var(--glass-shadow);
+  }
+}
+
+@media (max-width: 768px) {
+  .toggle-appearance-btn {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .appearance-panel {
+    bottom: 64px;
+    right: 16px;
+    left: 16px;
+    width: auto;
+    max-height: 55vh;
+  }
+}
+
+/* --- Gallery Tabs --- */
+.gallery-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 12px;
+}
+
+.gallery-tab-btn {
+  padding: 10px 18px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.02em;
+}
+
+.gallery-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
+}
+
+.gallery-tab-btn.active {
+  background: rgba(6, 182, 212, 0.12);
+  border-color: rgba(6, 182, 212, 0.35);
+  color: #22d3ee;
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.15);
+}
+
+/* --- Gallery Creatures Tab --- */
+.gallery-creatures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  overflow-y: auto;
+  padding-right: 8px;
+  flex-grow: 1;
+}
+
+.gallery-creature-card {
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  gap: 16px;
+  min-height: 350px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-creature-card.unlocked {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.gallery-creature-card.unlocked:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.gallery-creature-card.locked {
+  opacity: 0.45;
+  filter: grayscale(0.8);
+}
+
+/* Glowing Neon Borders */
+.gallery-creature-card.unlocked.green-glow {
+  border-color: rgba(16, 185, 129, 0.25);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.05), inset 0 0 12px rgba(16, 185, 129, 0.03);
+}
+.gallery-creature-card.unlocked.green-glow:hover {
+  border-color: rgba(16, 185, 129, 0.6);
+  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.15), inset 0 0 16px rgba(16, 185, 129, 0.05);
+}
+
+.gallery-creature-card.unlocked.sky-glow {
+  border-color: rgba(14, 165, 233, 0.25);
+  box-shadow: 0 4px 20px rgba(14, 165, 233, 0.05), inset 0 0 12px rgba(14, 165, 233, 0.03);
+}
+.gallery-creature-card.unlocked.sky-glow:hover {
+  border-color: rgba(14, 165, 233, 0.6);
+  box-shadow: 0 8px 30px rgba(14, 165, 233, 0.15), inset 0 0 16px rgba(14, 165, 233, 0.05);
+}
+
+.gallery-creature-card.unlocked.cyan-glow {
+  border-color: rgba(6, 182, 212, 0.25);
+  box-shadow: 0 4px 20px rgba(6, 182, 212, 0.05), inset 0 0 12px rgba(6, 182, 212, 0.03);
+}
+.gallery-creature-card.unlocked.cyan-glow:hover {
+  border-color: rgba(6, 182, 212, 0.6);
+  box-shadow: 0 8px 30px rgba(6, 182, 212, 0.15), inset 0 0 16px rgba(6, 182, 212, 0.05);
+}
+
+.gallery-creature-card.unlocked.gold-glow {
+  border-color: rgba(234, 179, 8, 0.25);
+  box-shadow: 0 4px 20px rgba(234, 179, 8, 0.05), inset 0 0 12px rgba(234, 179, 8, 0.03);
+}
+.gallery-creature-card.unlocked.gold-glow:hover {
+  border-color: rgba(234, 179, 8, 0.6);
+  box-shadow: 0 8px 30px rgba(234, 179, 8, 0.15), inset 0 0 16px rgba(234, 179, 8, 0.05);
+}
+
+.gallery-creature-card.unlocked.purple-glow {
+  border-color: rgba(168, 85, 247, 0.25);
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.05), inset 0 0 12px rgba(168, 85, 247, 0.03);
+}
+.gallery-creature-card.unlocked.purple-glow:hover {
+  border-color: rgba(168, 85, 247, 0.6);
+  box-shadow: 0 8px 30px rgba(168, 85, 247, 0.15), inset 0 0 16px rgba(168, 85, 247, 0.05);
+}
+
+/* Image Container Styles */
+.gallery-creature-img-container {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #040507;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.8);
+  flex-shrink: 0;
+}
+
+.gallery-creature-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: float-slow 4s ease-in-out infinite alternate;
+}
+
+.gallery-creature-img-container.locked {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.03);
+}
+
+.gallery-lock-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery-lock-overlay .lock-char {
+  font-size: 2.2rem;
+  color: rgba(255, 255, 255, 0.15);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Info Section Styles */
+.gallery-creature-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+}
+
+.gallery-creature-era {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #22d3ee;
+  letter-spacing: 0.04em;
+}
+
+.gallery-creature-time {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.gallery-creature-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-top: 4px;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+}
+
+.gallery-creature-card.unlocked.green-glow .gallery-creature-title { color: #34d399; }
+.gallery-creature-card.unlocked.sky-glow .gallery-creature-title { color: #0ea5e9; }
+.gallery-creature-card.unlocked.cyan-glow .gallery-creature-title { color: #22d3ee; }
+.gallery-creature-card.unlocked.gold-glow .gallery-creature-title { color: #fbbf24; }
+.gallery-creature-card.unlocked.purple-glow .gallery-creature-title { color: #c084fc; }
+
+.gallery-creature-desc {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+/* --- Game Clear Styles --- */
+.gameclear-panel {
+  max-width: 580px !important;
+  border-color: rgba(251, 191, 36, 0.55) !important;
+  box-shadow: 0 0 45px rgba(251, 191, 36, 0.35), var(--glass-shadow) !important;
+}
+
+.text-gradient-gold-cyan {
+  background: linear-gradient(135deg, #fbbf24 0%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-glow-gold {
+  text-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+}
+
+.clear-image-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 24px 0;
+}
+
+.clear-image-container {
+  width: 100%;
+  max-width: 480px;
+  height: 250px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #040507;
+  border: 2px solid rgba(251, 191, 36, 0.85);
+  box-shadow: 0 0 30px rgba(251, 191, 36, 0.45), inset 0 0 25px rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.clear-image-container:hover {
+  border-color: #22d3ee;
+  box-shadow: 0 0 45px rgba(34, 211, 238, 0.6), inset 0 0 25px rgba(0, 0, 0, 0.9);
+}
+
+.clear-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: clear-image-zoom-float 6s ease-in-out infinite alternate;
+}
+
+@keyframes clear-image-zoom-float {
+  0% {
+    transform: scale(1.0) translateY(0);
+  }
+  100% {
+    transform: scale(1.08) translateY(-4px);
+  }
+}
+
+.clear-badge {
+  margin-top: 14px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fbbf24;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+  letter-spacing: 0.05em;
+  background: rgba(251, 191, 36, 0.1);
+  padding: 4px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+/* --- Extinction Warning SVGs & Animations --- */
+.warning-art-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.event-svg {
+  width: 100px;
+  height: 100px;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.1));
+}
+
+.warning-event-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgba(239, 68, 68, 0.6);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
+  animation: warningImagePulse 2s infinite ease-in-out alternate;
+}
+
+@keyframes warningImagePulse {
+  from {
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+    border-color: rgba(239, 68, 68, 0.5);
+  }
+  to {
+    box-shadow: 0 0 18px rgba(239, 68, 68, 0.8);
+    border-color: rgba(239, 68, 68, 0.9);
+  }
+}
+
+/* 1. 大酸化破局: 泡と波 */
+.ox-bubble {
+  animation: float-bubble 3s infinite ease-in-out;
+}
+.bubble-1 { animation-delay: 0s; }
+.bubble-2 { animation-delay: 0.8s; }
+.bubble-3 { animation-delay: 1.5s; }
+.bubble-4 { animation-delay: 2.2s; }
+
+.ox-wave-1 {
+  transform-origin: center;
+  animation: sway-wave 4s infinite ease-in-out alternate;
+}
+.ox-wave-2 {
+  transform-origin: center;
+  animation: sway-wave-reverse 5s infinite ease-in-out alternate;
+}
+
+@keyframes float-bubble {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
+  50% { transform: translateY(-15px) scale(1.15); opacity: 0.9; }
+}
+
+@keyframes sway-wave {
+  0% { transform: rotate(0deg) translateX(0); }
+  100% { transform: rotate(2deg) translateX(4px); }
+}
+
+@keyframes sway-wave-reverse {
+  0% { transform: rotate(0deg) translateX(0); }
+  100% { transform: rotate(-2deg) translateX(-4px); }
+}
+
+/* 2. 全地球凍結: 氷晶と冷気 */
+.snow-globe {
+  animation: pulse-glow-ice 3s infinite ease-in-out alternate;
+}
+
+.snow-ring {
+  transform-origin: center;
+  animation: spin-slow 15s infinite linear;
+}
+
+@keyframes pulse-glow-ice {
+  from { filter: drop-shadow(0 0 4px #38bdf8); }
+  to { filter: drop-shadow(0 0 16px #38bdf8); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 3. 捕食者生存競争: 触手 */
+.pred-tentacle {
+  transform-origin: 100px 100px;
+}
+.tentacle-1 { animation: sway-tentacle 3s infinite ease-in-out alternate; }
+.tentacle-2 { animation: sway-tentacle-rev 3s infinite ease-in-out alternate; }
+.tentacle-3 { animation: sway-tentacle-slow 4s infinite ease-in-out alternate; }
+.tentacle-4 { animation: sway-tentacle-slow-rev 4s infinite ease-in-out alternate; }
+
+.pred-eye {
+  animation: shift-eye 4s infinite ease-in-out;
+}
+
+@keyframes sway-tentacle {
+  from { transform: rotate(-5deg); }
+  to { transform: rotate(5deg); }
+}
+
+@keyframes sway-tentacle-rev {
+  from { transform: rotate(5deg); }
+  to { transform: rotate(-5deg); }
+}
+
+@keyframes sway-tentacle-slow {
+  from { transform: rotate(-3deg); }
+  to { transform: rotate(3deg); }
+}
+
+@keyframes sway-tentacle-slow-rev {
+  from { transform: rotate(3deg); }
+  to { transform: rotate(-3deg); }
+}
+
+@keyframes shift-eye {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-3px, -2px); }
+  75% { transform: translate(3px, 2px); }
+}
+
+/* 4. 火山大爆発: マグマ脈動・火の粉 */
+.lava-flow {
+  animation: lava-pulse 2s infinite ease-in-out alternate;
+}
+
+.magma {
+  animation: erupt 1.5s infinite ease-in-out;
+}
+.magma-1 { animation-delay: 0s; }
+.magma-2 { animation-delay: 0.4s; }
+.magma-3 { animation-delay: 0.8s; }
+
+.spark {
+  animation: flicker-spark 1.8s infinite ease-in-out alternate;
+}
+.spark-1 { animation-delay: 0s; }
+.spark-2 { animation-delay: 0.6s; }
+.spark-3 { animation-delay: 1.2s; }
+
+@keyframes lava-pulse {
+  from { opacity: 0.7; }
+  to { opacity: 1.0; filter: drop-shadow(0 0 8px #f59e0b); }
+}
+
+@keyframes erupt {
+  0% { transform: translateY(15px) scale(0.5); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-25px) scale(1.1); opacity: 0; }
+}
+
+@keyframes flicker-spark {
+  0% { opacity: 0.2; transform: scale(0.8) translate(0, 0); }
+  100% { opacity: 1; transform: scale(1.2) translate(-5px, -15px); }
+}
+
+/* 5. 隕石衝突: 激震と光芒 */
+.meteor-group {
+  animation: shake-meteor 0.15s infinite linear;
+}
+
+.impact-glow {
+  transform-origin: 70px 110px;
+  animation: pulse-ring 1s infinite ease-out;
+}
+
+@keyframes shake-meteor {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-1px, 2px); }
+  100% { transform: translate(1px, -1px); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* 6. 大氷河期: 吹雪 */
+.blizzard-wave {
+  animation: drift-blizzard 3s infinite linear;
+}
+.wave-1 { animation-duration: 2.5s; }
+.wave-2 { animation-duration: 3.5s; }
+
+@keyframes drift-blizzard {
+  0% { transform: translateX(-15px); opacity: 0.3; }
+  50% { opacity: 0.8; }
+  100% { transform: translateX(15px); opacity: 0.3; }
+}
+
+/* ==========================================================================
+   🚨 大絶滅イベント専用風景モーダル (EventModal)
+   ========================================================================== */
+
+.event-modal-container {
+  max-width: 680px;
+  width: 100%;
+  padding: 30px;
+  text-align: center;
+  border: 2px solid rgba(239, 68, 68, 0.55) !important;
+  box-shadow: 0 0 35px rgba(239, 68, 68, 0.4), var(--glass-shadow) !important;
+  background: radial-gradient(circle at top, rgba(20, 10, 15, 0.95) 0%, rgba(5, 7, 10, 0.98) 100%) !important;
+  animation: modal-glow-pulse 3s infinite alternate;
+}
+
+@keyframes modal-glow-pulse {
+  0% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.3), var(--glass-shadow); border-color: rgba(239, 68, 68, 0.45); }
+  100% { box-shadow: 0 0 45px rgba(239, 68, 68, 0.55), var(--glass-shadow); border-color: rgba(239, 68, 68, 0.75); }
+}
+
+.event-modal-header {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--color-danger);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+}
+
+/* 風景コンテナ */
+.event-landscape-container {
+  width: 100%;
+  aspect-ratio: 600 / 260;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid rgba(239, 68, 68, 0.3);
+  background: #020406;
+  margin-bottom: 24px;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9);
+}
+
+.landscape-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.landscape-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  animation: landscapeFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes landscapeFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+.event-modal-title {
+  font-size: 2.1rem;
+  font-weight: 900;
+  margin-bottom: 14px;
+  letter-spacing: 0.05em;
+  color: #fff;
+}
+
+.text-glow-red {
+  text-shadow: 0 0 15px rgba(239, 68, 68, 0.75), 0 0 3px #fff;
+}
+
+.event-modal-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 24px;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 16px 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* 生存適応判定ボックス */
+.event-survival-box {
+  background: rgba(239, 68, 68, 0.04);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 28px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.survival-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.survival-status-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.survival-req-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fbbf24;
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+}
+
+.survival-badge {
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+}
+
+.adapted-badge {
+  background: rgba(16, 185, 129, 0.08) !important;
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
+  color: #34d399;
+}
+
+.danger-badge {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1px solid rgba(239, 68, 68, 0.5) !important;
+  color: #f87171;
+  animation: danger-pulse-glow 1s infinite alternate;
+}
+
+@keyframes danger-pulse-glow {
+  from { box-shadow: 0 0 4px rgba(239, 68, 68, 0.2); }
+  to { box-shadow: 0 0 12px rgba(239, 68, 68, 0.5); }
+}
+
+.text-glow-green {
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+
+.event-confirm-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%) !important;
+  border: 1px solid rgba(239, 68, 68, 0.4) !important;
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.4) !important;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  padding: 14px 28px;
+  font-size: 1.05rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.event-confirm-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #f87171 0%, #dc2626 100%) !important;
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.6) !important;
+}
+
+/* ==========================================================================
+   🎬 モーダル風景用特注CSSアニメーション (SVG レイヤー)
+   ========================================================================== */
+
+/* --- 共通: サンレイ (海底光線) --- */
+.landscape-ray {
+  transform-origin: top center;
+  animation: ray-pulse 6s infinite ease-in-out alternate;
+}
+.ray-1 { animation-delay: 0s; }
+.ray-2 { animation-delay: 1.5s; }
+.ray-3 { animation-delay: 3s; }
+
+@keyframes ray-pulse {
+  0% { opacity: 0.05; transform: scaleX(0.9) skewX(2deg); }
+  100% { opacity: 0.15; transform: scaleX(1.1) skewX(-2deg); }
+}
+
+/* --- 1. 大酸化破局 --- */
+.landscape-gas {
+  animation: gas-sway 5s infinite ease-in-out alternate;
+}
+.gas-1 { animation-delay: 0s; }
+.gas-2 { animation-delay: 2.5s; }
+
+@keyframes gas-sway {
+  0% { transform: skewX(-3deg); filter: blur(3px) brightness(0.9); }
+  100% { transform: skewX(3deg); filter: blur(5px) brightness(1.2); }
+}
+
+/* 泡の上昇・拡大ループ */
+.land-bubble {
+  transform-origin: bottom center;
+  animation: bubble-rise 4s infinite linear;
+}
+.lb-1 { animation-duration: 3s; animation-delay: 0s; }
+.lb-2 { animation-duration: 4.5s; animation-delay: 0.8s; }
+.lb-3 { animation-duration: 3.8s; animation-delay: 1.5s; }
+.lb-4 { animation-duration: 5.2s; animation-delay: 2.2s; }
+.lb-5 { animation-duration: 3.5s; animation-delay: 1.0s; }
+.lb-6 { animation-duration: 4.2s; animation-delay: 2.8s; }
+.lb-7 { animation-duration: 4.8s; animation-delay: 0.3s; }
+
+@keyframes bubble-rise {
+  0% { transform: translateY(280px) scale(0.4); opacity: 0; }
+  15% { opacity: 0.6; }
+  85% { opacity: 0.6; }
+  100% { transform: translateY(-50px) scale(1.1); opacity: 0; }
+}
+
+.bacter-cluster {
+  animation: float-slow 5s infinite ease-in-out alternate;
+}
+
+/* --- 2. 全地球凍結 --- */
+.snow-ring-slow {
+  transform-origin: 300px 130px;
+  animation: spin-slow 20s infinite linear reverse;
+}
+.snow-ring-fast {
+  transform-origin: 300px 130px;
+  animation: spin-slow 10s infinite linear;
+}
+
+.land-blizzard {
+  animation: blizzard-drift 3s infinite linear;
+}
+.lb-wave-1 { animation-duration: 2.2s; }
+.lb-wave-2 { animation-duration: 3.2s; }
+.lb-wave-3 { animation-duration: 4.2s; }
+
+@keyframes blizzard-drift {
+  0% { transform: translateX(-120px); opacity: 0.1; }
+  35% { opacity: 0.65; }
+  65% { opacity: 0.65; }
+  100% { transform: translateX(120px); opacity: 0.1; }
+}
+
+.snow-particles {
+  animation: snow-down 4s infinite linear;
+}
+@keyframes snow-down {
+  0% { transform: translateY(-30px) translateX(0); }
+  50% { transform: translateY(110px) translateX(15px); }
+  100% { transform: translateY(280px) translateX(0); }
+}
+
+/* --- 3. 生存競争爆発 --- */
+.land-tentacle {
+  transform-origin: bottom center;
+}
+.sway-left-slow { animation: tentacle-sway 4.5s infinite ease-in-out alternate; }
+.sway-right-fast { animation: tentacle-sway 3.2s infinite ease-in-out alternate-reverse; }
+.sway-left-fast { animation: tentacle-sway 2.8s infinite ease-in-out alternate; }
+.sway-right-slow { animation: tentacle-sway 5s infinite ease-in-out alternate-reverse; }
+
+@keyframes tentacle-sway {
+  0% { transform: rotate(-6deg) scaleY(0.95); }
+  100% { transform: rotate(6deg) scaleY(1.05); }
+}
+
+.anomalo-silhouette {
+  animation: float-anomalo 6s infinite ease-in-out alternate;
+}
+@keyframes float-anomalo {
+  0% { transform: translate(0, 0) scale(1.0); }
+  100% { transform: translate(8px, -6px) scale(1.02); }
+}
+
+.neon-eye-glow {
+  animation: eye-flicker 2s infinite ease-in-out alternate;
+}
+@keyframes eye-flicker {
+  0% { filter: drop-shadow(0 0 1px #f43f5e); opacity: 0.7; }
+  100% { filter: drop-shadow(0 0 8px #f43f5e); opacity: 1.0; }
+}
+
+.swim-fish-1 {
+  animation: swim-left-loop 5s infinite linear;
+}
+.swim-fish-2 {
+  animation: swim-left-loop 6.5s infinite linear;
+}
+
+@keyframes swim-left-loop {
+  0% { transform: translateX(350px); opacity: 0; }
+  15% { opacity: 0.55; }
+  85% { opacity: 0.55; }
+  100% { transform: translateX(-350px); opacity: 0; }
+}
+
+/* --- 4. ペルム紀火山 --- */
+.toxic-cloud {
+  animation: cloud-drift 8s infinite ease-in-out alternate;
+}
+.cloud-slow { animation-duration: 10s; }
+.cloud-fast { animation-duration: 6s; }
+
+@keyframes cloud-drift {
+  0% { transform: translateX(-15px); }
+  100% { transform: translateX(15px); }
+}
+
+.crater-pulse {
+  animation: pulse-glow-fire 2s infinite ease-in-out alternate;
+}
+@keyframes pulse-glow-fire {
+  0% { transform: scale(0.9); opacity: 0.6; filter: drop-shadow(0 0 6px #ef4444); }
+  100% { transform: scale(1.15); opacity: 1.0; filter: drop-shadow(0 0 18px #f59e0b); }
+}
+
+.lava-pulse {
+  animation: lava-flow-anim 3s infinite ease-in-out alternate;
+}
+@keyframes lava-flow-anim {
+  0% { filter: brightness(0.85); opacity: 0.8; }
+  100% { filter: brightness(1.15); opacity: 1.0; }
+}
+
+.magma-spark {
+  transform-origin: 300px 53px;
+  animation: magma-shoot 1.8s infinite ease-out;
+}
+.ms-1 { animation-delay: 0s; }
+.ms-2 { animation-delay: 0.3s; }
+.ms-3 { animation-delay: 0.7s; }
+.ms-4 { animation-delay: 1.1s; }
+.ms-5 { animation-delay: 1.4s; }
+
+@keyframes magma-shoot {
+  0% { transform: translateY(0) scale(0.4) rotate(0deg); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 0.8; }
+  100% { transform: translateY(-70px) translateX(var(--dx, 20px)) scale(0.9) rotate(360deg); opacity: 0; }
+}
+
+.ms-1 { --dx: -25px; }
+.ms-2 { --dx: 30px; animation-duration: 1.5s; }
+.ms-3 { --dx: -10px; animation-duration: 2.1s; }
+.ms-4 { --dx: 15px; animation-duration: 1.6s; }
+.ms-5 { --dx: -35px; animation-duration: 1.9s; }
+
+.sparkles {
+  animation: sparkles-float 3s infinite ease-in-out alternate;
+}
+@keyframes sparkles-float {
+  0% { transform: translateY(0) scale(0.9); opacity: 0.5; }
+  100% { transform: translateY(-10px) scale(1.1); opacity: 0.95; }
+}
+
+/* --- 5. 隕石衝突 --- */
+.meteor-landscape-group {
+  animation: meteor-shake-fast 0.12s infinite linear;
+}
+
+@keyframes meteor-shake-fast {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-2px, 3px) rotate(0.2deg); }
+  100% { transform: translate(2px, -2px) rotate(-0.2deg); }
+}
+
+.meteor-pulse-glow {
+  animation: meteor-burn 1.5s infinite ease-in-out alternate;
+}
+@keyframes meteor-burn {
+  0% { filter: drop-shadow(0 0 10px #ef4444); transform: scale(0.96); }
+  100% { filter: drop-shadow(0 0 35px #fde047); transform: scale(1.04); }
+}
+
+/* 衝撃波パルス (同心円状の急拡大＆フェードアウト) */
+.impact-pulse {
+  transform-origin: 480px 180px;
+  animation: impact-ring-grow 2.5s infinite cubic-bezier(0.1, 0.8, 0.3, 1);
+}
+.ip-1 { animation-delay: 0s; }
+.ip-2 { animation-delay: 0.8s; }
+.ip-3 { animation-delay: 1.6s; }
+
+@keyframes impact-ring-grow {
+  0% { transform: scale(0.3); opacity: 0; }
+  10% { opacity: 0.85; }
+  90% { opacity: 0.2; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* --- 6. 第四紀大氷河期 --- */
+.land-ice-blizzard {
+  animation: ice-blizzard-scroll 2.5s infinite linear;
+}
+.lib-wave-1 { animation-duration: 2.1s; }
+.lib-wave-2 { animation-duration: 2.9s; }
+
+@keyframes ice-blizzard-scroll {
+  0% { transform: translateX(-150px) translateY(0); opacity: 0.2; }
+  40% { opacity: 0.7; }
+  60% { opacity: 0.7; }
+  100% { transform: translateX(150px) translateY(10px) skewY(2deg); opacity: 0.2; }
+}
+
+.frost-frame {
+  animation: frost-glow 3s infinite ease-in-out alternate;
+}
+@keyframes frost-glow {
+  0% { filter: drop-shadow(0 0 2px #38bdf8); opacity: 0.45; }
+  100% { filter: drop-shadow(0 0 12px #e0f2fe); opacity: 0.8; }
+}
+
+.mammoth-silhouette {
+  animation: float-slow 4.5s infinite ease-in-out alternate;
+}
+
+/* ==========================================
+   🧬 7. 生命の起源プロローグモーダル用スタイル 🧬
+   ========================================== */
+
+/* プロローグ専用のネオンバイオレットグロースタイル */
+.intro-modal-panel {
+  border: 1px solid rgba(168, 85, 247, 0.45);
+  box-shadow: 0 0 35px rgba(168, 85, 247, 0.25), inset 0 0 15px rgba(168, 85, 247, 0.15);
+  background: rgba(15, 5, 25, 0.85);
+}
+
+/* 原始地球の熱水噴出孔の黒煙・噴出ガスアニメーション */
+.landscape-gas {
+  transform-origin: bottom center;
+  filter: blur(4px);
+  animation: gas-sway 6s infinite ease-in-out alternate;
+}
+.gas-1 {
+  animation-duration: 5.5s;
+  animation-delay: 0s;
+}
+.gas-2 {
+  animation-duration: 7s;
+  animation-delay: -2s;
+}
+
+/* 原始スープ内のアミノ酸・有機物粒子のゆらぎ浮遊アニメーション */
+.soup-particles .soup-p {
+  animation: float-soup 8s infinite ease-in-out alternate;
+  filter: drop-shadow(0 0 4px currentColor);
+}
+.sp-1 { animation-delay: 0s; animation-duration: 7s; transform-origin: 280px 180px; }
+.sp-2 { animation-delay: -1.5s; animation-duration: 8.5s; transform-origin: 340px 210px; }
+.sp-3 { animation-delay: -3s; animation-duration: 6.2s; transform-origin: 210px 140px; }
+.sp-4 { animation-delay: -0.5s; animation-duration: 9s; transform-origin: 160px 190px; }
+.sp-5 { animation-delay: -4s; animation-duration: 7.8s; transform-origin: 430px 220px; }
+.sp-6 { animation-delay: -2.2s; animation-duration: 6.7s; transform-origin: 480px 170px; }
+.sp-7 { animation-delay: -5.5s; animation-duration: 9.3s; transform-origin: 250px 230px; }
+.sp-8 { animation-delay: -1.2s; animation-duration: 5.8s; transform-origin: 380px 150px; }
+
+@keyframes float-soup {
+  0% {
+    transform: translate(0, 0) scale(0.9);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(6px, -12px) scale(1.1);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(-6px, -24px) scale(0.9);
+    opacity: 0.4;
+  }
+}
+
+/* RNA二重らせんの回転・浮遊アニメーション */
+.rna-helix {
+  transform-origin: 150px 70px;
+  animation: rna-float-spin 12s infinite linear;
+  filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.8));
+}
+
+@keyframes rna-float-spin {
+  0% {
+    transform: translate(100px, 70px) scale(0.6) rotate(0deg);
+  }
+  50% {
+    transform: translate(110px, 60px) scale(0.65) rotate(180deg);
+  }
+  100% {
+    transform: translate(100px, 70px) scale(0.6) rotate(360deg);
+  }
+}
+
+/* 雷光の急激な明滅（閃光）アニメーション */
+.lightning-flash-bg {
+  animation: lightning-flash-bg-anim 9s infinite ease-in-out;
+}
+
+.lightning-bolt {
+  animation: lightning-bolt-anim 9s infinite ease-in-out;
+  filter: drop-shadow(0 0 12px #fff) drop-shadow(0 0 20px #a855f7);
+}
+
+.lightning-bolt-2 {
+  animation: lightning-bolt-anim 9s infinite ease-in-out;
+  animation-delay: 2.2s;
+  filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 15px #c084fc);
+}
+
+@keyframes lightning-flash-bg-anim {
+  0%, 18%, 22%, 68%, 72%, 100% { opacity: 0; }
+  19%, 21% { opacity: 0.4; }
+  20% { opacity: 0.7; }
+  69%, 71% { opacity: 0.35; }
+  70% { opacity: 0.6; }
+}
+
+@keyframes lightning-bolt-anim {
+  0%, 18.5%, 21.5%, 68.5%, 71.5%, 100% { opacity: 0; }
+  19%, 21% { opacity: 0.8; }
+  19.5%, 20.5% { opacity: 0.3; }
+  20% { opacity: 1; }
+  69%, 71% { opacity: 0.7; }
+  69.5%, 70.5% { opacity: 0.2; }
+  70% { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .event-modal-container {
+    padding: 20px;
+  }
+  .event-modal-title {
+    font-size: 1.5rem;
+  }
+  .event-modal-description {
+    font-size: 0.85rem;
+    padding: 12px 14px;
+  }
+  .survival-req-name {
+    font-size: 0.9rem;
+  }
+  .survival-badge {
+    font-size: 0.72rem;
+    padding: 4px 10px;
+  }
+  .event-confirm-btn {
+    font-size: 0.95rem;
+    padding: 12px 20px;
+  }
+  .clear-image-container {
+    height: 180px;
+  }
+}
+
+
+
