@@ -49,7 +49,7 @@ export class GameEngine {
   // 時代ごとの進行カウンター
   public eraProgress = 0; // 0 〜 100 (進化を1回選択するごとに進む)
   private eventCooldown = 15; // イベント開始までの待機時間 (秒)
-  private erasWithTriggeredEvent = new Set<EraType>();
+  private triggeredEventKeys = new Set<string>();
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -247,6 +247,11 @@ export class GameEngine {
         // 終了時フラッシュ効果 (緑)
         this.flashAlpha = 0.6;
         this.flashColor = 'rgba(16, 185, 129, 0.4)';
+
+        // 時代進行条件を満たしている場合でも、未発生イベントが残っていれば時代遷移を待つ。
+        if (this.eraProgress >= 100 && !this.getNextRequiredEventKey(this.currentEra)) {
+          this.transitionToNextEra();
+        }
       }
       return;
     }
@@ -257,42 +262,47 @@ export class GameEngine {
       return;
     }
 
-    // その時代でまだイベントが起きていない場合は、初回だけ必ず発生させる。
-    if (this.hasExtinctionEvent(this.currentEra) && !this.erasWithTriggeredEvent.has(this.currentEra)) {
-      this.triggerEvent();
+    // その時代で未発生のイベントが残っている間は、確率ではなく必ず順番に発生させる。
+    const nextRequiredEventKey = this.getNextRequiredEventKey(this.currentEra);
+    if (nextRequiredEventKey) {
+      this.triggerEvent(nextRequiredEventKey);
       return;
     }
 
-    // 初回イベント後は従来通り、確率で追加イベントを発生させる。
+    // 全イベント発生後は従来通り、確率で追加イベントを発生させる。
     const prob = ERAS[this.currentEra].eventProbability;
     if (Math.random() < prob * deltaTime) {
       this.triggerEvent();
     }
   }
 
-  private hasExtinctionEvent(era: EraType) {
-    return era !== 'HADEAN_ARCHEAN';
+  private getRequiredEventKeys(era: EraType) {
+    switch (era) {
+      case 'PROTEROZOIC':
+        return ['GREAT_OXIDATION', 'SNOWBALL_EARTH'];
+      case 'PALEOZOIC':
+        return ['CAMBRIAN_EXPLOSION', 'PERMIAN_EXTINCTION'];
+      case 'MESOZOIC':
+        return ['METEOR_IMPACT'];
+      case 'CENOZOIC':
+        return ['GLACIAL_CYCLE'];
+      default:
+        return [];
+    }
+  }
+
+  private getNextRequiredEventKey(era: EraType) {
+    return this.getRequiredEventKeys(era).find(eventKey => !this.triggeredEventKeys.has(eventKey));
   }
 
   // 絶滅イベントのトリガー
-  private triggerEvent() {
-    let eventKey = '';
+  private triggerEvent(forcedEventKey?: string) {
+    let eventKey = forcedEventKey || '';
     
-    switch (this.currentEra) {
-      case 'PROTEROZOIC':
-        eventKey = Math.random() > 0.5 ? 'GREAT_OXIDATION' : 'SNOWBALL_EARTH';
-        break;
-      case 'PALEOZOIC':
-        eventKey = Math.random() > 0.5 ? 'CAMBRIAN_EXPLOSION' : 'PERMIAN_EXTINCTION';
-        break;
-      case 'MESOZOIC':
-        eventKey = 'METEOR_IMPACT';
-        break;
-      case 'CENOZOIC':
-        eventKey = 'GLACIAL_CYCLE';
-        break;
-      default:
-        return; // 冥王代・始生代はイベントなし
+    if (!eventKey) {
+      const eventKeys = this.getRequiredEventKeys(this.currentEra);
+      if (eventKeys.length === 0) return; // 冥王代・始生代はイベントなし
+      eventKey = eventKeys[Math.floor(Math.random() * eventKeys.length)];
     }
 
     const event = EXTINCTION_EVENTS[eventKey];
@@ -300,7 +310,7 @@ export class GameEngine {
 
     this.activeEvent = event;
     this.eventTimer = event.duration;
-    this.erasWithTriggeredEvent.add(this.currentEra);
+    this.triggeredEventKeys.add(eventKey);
     this.onEventStarted(event);
 
     sound.playExtinctionWarning();
@@ -377,7 +387,13 @@ export class GameEngine {
     this.eraProgress += 50; // 進化2回で時代が次のフェーズへ
 
     if (this.eraProgress >= 100) {
-      this.transitionToNextEra();
+      if (this.getNextRequiredEventKey(this.currentEra)) {
+        this.eventCooldown = 0;
+        this.isPaused = false;
+        sound.resume();
+      } else {
+        this.transitionToNextEra();
+      }
     } else {
       this.isPaused = false;
       sound.resume();
@@ -400,7 +416,7 @@ export class GameEngine {
     } else {
       const nextEra = eraOrder[currentIdx + 1];
       this.currentEra = nextEra;
-      this.eventCooldown = this.hasExtinctionEvent(nextEra) ? 8 : 15;
+      this.eventCooldown = this.getRequiredEventKeys(nextEra).length > 0 ? 8 : 15;
       this.player.loadIconImage(nextEra);
       sound.setEra(nextEra);
       this.onEraChanged(nextEra);
