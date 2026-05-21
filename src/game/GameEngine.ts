@@ -49,6 +49,7 @@ export class GameEngine {
   // 時代ごとの進行カウンター
   public eraProgress = 0; // 0 〜 100 (進化を1回選択するごとに進む)
   private eventCooldown = 15; // イベント開始までの待機時間 (秒)
+  private erasWithTriggeredEvent = new Set<EraType>();
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -256,11 +257,21 @@ export class GameEngine {
       return;
     }
 
-    // 確率でイベント発生 (各時代固有のイベント)
+    // その時代でまだイベントが起きていない場合は、初回だけ必ず発生させる。
+    if (this.hasExtinctionEvent(this.currentEra) && !this.erasWithTriggeredEvent.has(this.currentEra)) {
+      this.triggerEvent();
+      return;
+    }
+
+    // 初回イベント後は従来通り、確率で追加イベントを発生させる。
     const prob = ERAS[this.currentEra].eventProbability;
     if (Math.random() < prob * deltaTime) {
       this.triggerEvent();
     }
+  }
+
+  private hasExtinctionEvent(era: EraType) {
+    return era !== 'HADEAN_ARCHEAN';
   }
 
   // 絶滅イベントのトリガー
@@ -281,7 +292,7 @@ export class GameEngine {
         eventKey = 'GLACIAL_CYCLE';
         break;
       default:
-        return; // 冥王代はイベントなし
+        return; // 冥王代・始生代はイベントなし
     }
 
     const event = EXTINCTION_EVENTS[eventKey];
@@ -289,6 +300,7 @@ export class GameEngine {
 
     this.activeEvent = event;
     this.eventTimer = event.duration;
+    this.erasWithTriggeredEvent.add(this.currentEra);
     this.onEventStarted(event);
 
     sound.playExtinctionWarning();
@@ -388,6 +400,7 @@ export class GameEngine {
     } else {
       const nextEra = eraOrder[currentIdx + 1];
       this.currentEra = nextEra;
+      this.eventCooldown = this.hasExtinctionEvent(nextEra) ? 8 : 15;
       this.player.loadIconImage(nextEra);
       sound.setEra(nextEra);
       this.onEraChanged(nextEra);
